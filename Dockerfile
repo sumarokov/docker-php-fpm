@@ -33,7 +33,7 @@ RUN buildDeps='git libicu-dev libmcrypt-dev libfreetype6-dev libjpeg-dev libjpeg
                            soap && \
     # Install PECL extensions
     # see http://stackoverflow.com/a/8154466/291573) for usage of `printf`
-    printf "\n" | pecl install apcu-5.1.3 xdebug-2.4.0RC2 && \
+    printf "\n" | pecl install apcu-5.1.3 xdebug-2.4.0 && \
     # clean the mess
     apt-get clean && \
     apt-get purge -y --auto-remove $buildDeps && \

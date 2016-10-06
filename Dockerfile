@@ -4,13 +4,14 @@ MAINTAINER Roman Bulgakov
 LABEL version=1.0
 
 WORKDIR /root
-RUN buildDeps='git libicu-dev libmcrypt-dev libfreetype6-dev libjpeg-dev libjpeg62-turbo-dev libpng12-dev zlib1g-dev libxml2-dev' && \
+RUN buildDeps='git libicu-dev libmcrypt-dev librdkafka-dev libfreetype6-dev libjpeg-dev libjpeg62-turbo-dev libpng12-dev zlib1g-dev libxml2-dev' && \
     set -x && \
     apt-get update && \
     apt-get -y install \
             g++ \
             libicu52 \
             libmcrypt4 \
+            librdkafka1 \
             libfreetype6 \
             libjpeg62-turbo \
             libpng12-0 \
@@ -33,10 +34,12 @@ RUN buildDeps='git libicu-dev libmcrypt-dev libfreetype6-dev libjpeg-dev libjpeg
                            soap && \
     # Install PECL extensions
     # see http://stackoverflow.com/a/8154466/291573) for usage of `printf`
-    printf "\n" | pecl install apcu-5.1.3 xdebug-2.4.0 && \
+    curl -O https://pecl.php.net/get/rdkafka-2.0.0.tgz && \
+    printf "\n" | pecl install apcu-5.1.3 xdebug-2.4.0 rdkafka-2.0.0.tgz && \
     # clean the mess
     apt-get clean && \
     apt-get purge -y --auto-remove $buildDeps && \
+    rm rdkafka-2.0.0.tgz && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 # Configuration
 COPY ./container-files/php.ini /usr/local/etc/php/conf.d/

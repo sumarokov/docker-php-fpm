@@ -18,5 +18,6 @@ Built on top of official `php:7.0-fpm`
 - soap
 - apcu
 - xdebug
+- rdkafka
 
 all dev-packages required to build extensions are removed

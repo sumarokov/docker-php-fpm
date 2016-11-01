@@ -16,8 +16,8 @@ Built on top of official `php:7.0-fpm`
 - zip
 - bcmath
 - soap
-- apcu
-- xdebug
-- rdkafka
+- apcu 5.1.7
+- xdebug 2.4.1
+- rdkafka 2.0
 
 all dev-packages required to build extensions are removed

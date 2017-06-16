@@ -1,6 +1,6 @@
 FROM php:7.1-fpm
 
-MAINTAINER Roman Bulgakov
+MAINTAINER Alex Sumar
 LABEL version=1.1
 
 WORKDIR /root

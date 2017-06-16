@@ -4,7 +4,7 @@ Docker image of php-fpm 7.x built with most needed extensions
 
 ## Contents
 
-Built on top of official `php:7.0-fpm`
+Built on top of official `php:7.1-fpm`
 
 ### Extensions installed:
 

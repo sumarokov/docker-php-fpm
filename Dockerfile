@@ -1,7 +1,7 @@
-FROM php:7.0-fpm
+FROM php:7.1-fpm
 
 MAINTAINER Roman Bulgakov
-LABEL version=1.0
+LABEL version=1.1
 
 WORKDIR /root
 RUN buildDeps='git libicu-dev libmcrypt-dev libfreetype6-dev libjpeg-dev libjpeg62-turbo-dev libpng12-dev zlib1g-dev libxml2-dev' && \

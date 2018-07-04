@@ -9,7 +9,7 @@ RUN buildDeps='git libicu-dev libmcrypt-dev libfreetype6-dev libjpeg-dev libjpeg
     apt-get update && \
     apt-get -y install \
             g++ \
-            libicu52 \
+            libicu55 \
             libmcrypt4 \
             libfreetype6 \
             libjpeg62-turbo \

@@ -38,7 +38,7 @@ RUN buildDeps='git libicu-dev libmcrypt-dev libfreetype6-dev libjpeg-dev libjpeg
     && docker-php-ext-install memcached \
     && rm /tmp/memcached.tar.gz \
     && pecl install xdebug-2.6.1 \
-    && docker-php-ext-enable xdebug
+    && docker-php-ext-enable xdebug \
     # Install PECL extensions
     # see http://stackoverflow.com/a/8154466/291573) for usage of `printf`
     printf "\n" | pecl install apcu-5.1.3 mcrypt-1.0.1 && \

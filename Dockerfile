@@ -50,4 +50,4 @@ RUN buildDeps='git libicu-dev libmcrypt-dev libfreetype6-dev libjpeg-dev libjpeg
     apt-get purge -y --auto-remove $buildDeps && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 # Configuration
-COPY ./container-files/php.ini /usr/local/etc/php/conf.d/
+COPY ./container-files/custom-php.ini /usr/local/etc/php/conf.d/

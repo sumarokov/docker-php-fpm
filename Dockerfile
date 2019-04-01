@@ -9,6 +9,7 @@ RUN buildDeps='git libicu-dev libmcrypt-dev libfreetype6-dev libjpeg-dev libjpeg
     apt-get update && \
     apt-get -y install \
             g++ \
+            libzip-dev \
             libicu-dev \
             libmcrypt4 \
             libfreetype6 \
@@ -37,11 +38,12 @@ RUN buildDeps='git libicu-dev libmcrypt-dev libfreetype6-dev libjpeg-dev libjpeg
     && docker-php-ext-configure memcached \
     && docker-php-ext-install memcached \
     && rm /tmp/memcached.tar.gz \
-    && pecl install xdebug-2.6.1 \
+    && pecl install xdebug \
     && docker-php-ext-enable xdebug \
     # Install PECL extensions
     # see http://stackoverflow.com/a/8154466/291573) for usage of `printf`
-    printf "\n" | pecl install apcu-5.1.3 mcrypt-1.0.1 && \
+    printf "\n" | pecl install apcu && \
+    pecl install mcrypt-1.0.2 && \
     docker-php-ext-enable mcrypt && \
     # clean the mess
     apt-get clean && \

@@ -10,9 +10,9 @@ RUN buildDeps='git libicu-dev libmcrypt-dev libfreetype6-dev libjpeg-dev libjpeg
     apt-get -y install \
             g++ \
             zip \
-            libzip-dev \
             libmcrypt4 \
             libpng-dev \
+            ibpng16-dev \
             libmemcached-dev \
             mysql-client \
             openssh-client \

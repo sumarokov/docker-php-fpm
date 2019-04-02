@@ -9,15 +9,11 @@ RUN buildDeps='git libicu-dev libmcrypt-dev libfreetype6-dev libjpeg-dev libjpeg
     apt-get update && \
     apt-get -y install \
             g++ \
+            zip \
             libzip-dev \
-            libicu-dev \
             libmcrypt4 \
-            libfreetype6 \
-            libjpeg62-turbo \
             libpng-dev \
             libmemcached-dev \
-            zlib1g \
-            libxml2 \
             mysql-client \
             openssh-client \
             $buildDeps \

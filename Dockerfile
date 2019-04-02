@@ -10,9 +10,9 @@ RUN buildDeps='git libicu-dev libmcrypt-dev libfreetype6-dev libjpeg-dev libjpeg
     apt-get -y install \
             g++ \
             zip \
-            libzip-dev \
+            libzip \
             libmcrypt4 \
-            libpng-dev \
+            libpng \
             libmemcached-dev \
             mysql-client \
             openssh-client \
@@ -27,9 +27,7 @@ RUN buildDeps='git libicu-dev libmcrypt-dev libfreetype6-dev libjpeg-dev libjpeg
                            pdo_mysql \
                            mbstring \
                            zip \
-                           libzip \
                            bcmath \
-                           libpng \
                            soap && \
     curl -L -o /tmp/memcached.tar.gz "https://github.com/php-memcached-dev/php-memcached/archive/master.tar.gz" \
     && mkdir -p /usr/src/php/ext/memcached \

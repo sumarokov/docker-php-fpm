@@ -10,7 +10,7 @@ RUN buildDeps='git libicu-dev libmcrypt-dev libfreetype6-dev libjpeg-dev libjpeg
     apt-get -y install \
             g++ \
             zip \
-            lilibzip-dev \
+            libzip-dev \
 			libicu-dev \
 			libmcrypt4 \
 			libfreetype6 \

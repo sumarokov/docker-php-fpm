@@ -4,13 +4,14 @@ MAINTAINER Roman Bulgakov
 LABEL version=1.1
 
 WORKDIR /root
-RUN buildDeps='git libicu-dev libmcrypt-dev libfreetype6-dev libjpeg-dev libjpeg62-turbo-dev zlib1g-dev libxml2-dev libzip4' && \
+RUN buildDeps='git libicu-dev libmcrypt-dev libfreetype6-dev libjpeg-dev libjpeg62-turbo-dev zlib1g-dev libxml2-dev' && \
     set -x && \
     apt-get update && \
     apt-get -y install \
             g++ \
             zip \
             libzip-dev \
+            libzip4 \
 			libicu-dev \
 			libmcrypt4 \
 			libfreetype6 \

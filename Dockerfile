@@ -22,6 +22,7 @@ RUN buildDeps='git libicu-dev libmcrypt-dev libfreetype6-dev libjpeg-dev libjpeg
 			libxml2 \
             mysql-client \
             openssh-client \
+            ssmtp \
             $buildDeps \
             --no-install-recommends && \
     # Install PHP extensions required for Yii 2.0 Framework

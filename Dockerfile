@@ -36,7 +36,8 @@ RUN buildDeps='git libicu-dev libmcrypt-dev libfreetype6-dev libjpeg-dev libjpeg
                            bcmath \
                            soap \
                            sockets \
-                           mysqli && \
+                           mysqli \
+                           opcache && \
     curl -L -o /tmp/memcached.tar.gz "https://github.com/php-memcached-dev/php-memcached/archive/master.tar.gz" \
     && mkdir -p /usr/src/php/ext/memcached \
     && tar -C /usr/src/php/ext/memcached -zxvf /tmp/memcached.tar.gz --strip 1 \
@@ -56,3 +57,20 @@ RUN buildDeps='git libicu-dev libmcrypt-dev libfreetype6-dev libjpeg-dev libjpeg
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 # Configuration
 COPY ./container-files/custom-php.ini /usr/local/etc/php/conf.d/
+
+#opcache
+ENV OPCACHE_MAX_ACCELERATED_FILES 4000
+ENV OPCACHE_REVALIDATE_FREQ 60
+ENV OPCACHE_MEMORY_CONSUMPTION 128
+ENV OPCAHCE_INTERNED_STRINGS_BUFFER 8
+ENV OPCAHCE_FAST_SHUTDOWN 1
+ENV OPCACHE_SAVE_COMMENTS 0
+
+RUN  echo "opcache.enable=1" >> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini \
+  && echo "opcache.enable_cli=1" >> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini \
+  && echo "opcache.revalidate_freq=${OPCACHE_REVALIDATE_FREQ}" >> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini \
+  && echo "opcache.memory_consumption=${OPCACHE_MEMORY_CONSUMPTION}" >> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini \
+  && echo "opcache.max_accelerated_files=${OPCACHE_MAX_ACCELERATED_FILES}" >> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini \
+  && echo "opcache.interned_strings_buffer=${OPCAHCE_INTERNED_STRINGS_BUFFER}" >> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini \
+  && echo "opcache.fast_shutdown=${OPCAHCE_FAST_SHUTDOWN}" >> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini \
+  && echo "opcache.save_comments=${OPCACHE_SAVE_COMMENTS}" >> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini

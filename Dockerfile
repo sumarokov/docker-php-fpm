@@ -26,7 +26,8 @@ RUN buildDeps='git libicu-dev libmcrypt-dev libfreetype6-dev libjpeg-dev libjpeg
             $buildDeps \
             --no-install-recommends && \
     docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-png-dir=/usr/include/ && \
-    docker-php-ext-configure bcmath && \
+    docker-php-ext-configure bcmath --enable-bcmath && \
+    docker-php-ext-configure pcntl --enable-pcntl && \
     docker-php-ext-configure zip --with-libzip && \
     docker-php-ext-install gd \
                            intl \
@@ -34,6 +35,7 @@ RUN buildDeps='git libicu-dev libmcrypt-dev libfreetype6-dev libjpeg-dev libjpeg
                            mbstring \
                            zip \
                            bcmath \
+                           pcntl \
                            soap \
                            sockets \
                            mysqli \

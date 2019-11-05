@@ -20,9 +20,9 @@ RUN buildDeps='git libicu-dev libmcrypt-dev libfreetype6-dev libjpeg-dev libjpeg
 			libmemcached-dev \
 			zlib1g \
 			libxml2 \
-            mysql-client \
+            mariadb-client \
             openssh-client \
-            ssmtp \
+            msmtp \
             $buildDeps \
             --no-install-recommends && \
     docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-png-dir=/usr/include/ && \

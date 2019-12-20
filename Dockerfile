@@ -4,7 +4,7 @@ MAINTAINER Roman Bulgakov
 LABEL version=1.1
 
 WORKDIR /root
-RUN buildDeps='git libicu-dev libmcrypt-dev libfreetype6-dev libjpeg-dev libjpeg62-turbo-dev zlib1g-dev libxml2-dev' && \
+RUN buildDeps='git libicu-dev libmcrypt-dev libfreetype6-dev libjpeg-dev libjpeg62-turbo-dev zlib1g-dev libxml2-dev libpq-dev libonig-dev' && \
     set -x && \
     apt-get update && \
     apt-get -y install \
@@ -23,12 +23,13 @@ RUN buildDeps='git libicu-dev libmcrypt-dev libfreetype6-dev libjpeg-dev libjpeg
             mariadb-client \
             openssh-client \
             msmtp \
+            postgresql \
+            postgresql-contrib \
             $buildDeps \
             --no-install-recommends && \
-    docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-png-dir=/usr/include/ && \
+    docker-php-ext-configure gd --with-freetype --with-jpeg && \
     docker-php-ext-configure bcmath --enable-bcmath && \
     docker-php-ext-configure pcntl --enable-pcntl && \
-    docker-php-ext-configure zip --with-libzip && \
     docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql && \
     docker-php-ext-install gd \
                            intl \
@@ -55,7 +56,7 @@ RUN buildDeps='git libicu-dev libmcrypt-dev libfreetype6-dev libjpeg-dev libjpeg
     # Install PECL extensions
     # see http://stackoverflow.com/a/8154466/291573) for usage of `printf`
     printf "\n" | pecl install apcu && \
-    pecl install mcrypt-1.0.2 && \
+    pecl install mcrypt && \
     docker-php-ext-enable mcrypt && \
     # clean the mess
     apt-get clean && \

@@ -29,9 +29,12 @@ RUN buildDeps='git libicu-dev libmcrypt-dev libfreetype6-dev libjpeg-dev libjpeg
     docker-php-ext-configure bcmath --enable-bcmath && \
     docker-php-ext-configure pcntl --enable-pcntl && \
     docker-php-ext-configure zip --with-libzip && \
+    docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql && \
     docker-php-ext-install gd \
                            intl \
+                           pdo \
                            pdo_mysql \
+                           pdo_pgsql \
                            mbstring \
                            zip \
                            bcmath \
@@ -39,6 +42,7 @@ RUN buildDeps='git libicu-dev libmcrypt-dev libfreetype6-dev libjpeg-dev libjpeg
                            soap \
                            sockets \
                            mysqli \
+                           pgsql \
                            opcache && \
     curl -L -o /tmp/memcached.tar.gz "https://github.com/php-memcached-dev/php-memcached/archive/master.tar.gz" \
     && mkdir -p /usr/src/php/ext/memcached \

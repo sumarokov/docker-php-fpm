@@ -61,7 +61,7 @@ RUN buildDeps='git libicu-dev libmcrypt-dev libfreetype6-dev libjpeg-dev libjpeg
     printf "\n" | pecl install apcu && \
     pecl install mcrypt && \
     docker-php-ext-enable mcrypt && \
-    pecl -v install rar && \
+    pecl --nocompress install rar && \
     # clean the mess
     apt-get clean && \
     apt-get purge -y --auto-remove $buildDeps && \

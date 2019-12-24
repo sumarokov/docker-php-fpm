@@ -4,7 +4,7 @@ MAINTAINER Roman Bulgakov
 LABEL version=1.1
 
 WORKDIR /root
-RUN buildDeps='git libicu-dev libmcrypt-dev libfreetype6-dev libjpeg-dev libjpeg62-turbo-dev zlib1g-dev libxml2-dev libpq-dev libonig-dev' && \
+RUN buildDeps='git libicu-dev libmcrypt-dev libfreetype6-dev libjpeg-dev libjpeg62-turbo-dev zlib1g-dev libxml2-dev libpq-dev libonig-dev libkrb5-dev libc-client-dev' && \
     set -x && \
     apt-get update && \
     apt-get -y install \
@@ -31,6 +31,8 @@ RUN buildDeps='git libicu-dev libmcrypt-dev libfreetype6-dev libjpeg-dev libjpeg
     docker-php-ext-configure bcmath --enable-bcmath && \
     docker-php-ext-configure pcntl --enable-pcntl && \
     docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql && \
+    set -eux; \
+    PHP_OPENSSL=yes docker-php-ext-configure imap --with-kerberos --with-imap-ssl; \
     docker-php-ext-install gd \
                            intl \
                            pdo \
@@ -44,7 +46,8 @@ RUN buildDeps='git libicu-dev libmcrypt-dev libfreetype6-dev libjpeg-dev libjpeg
                            sockets \
                            mysqli \
                            pgsql \
-                           opcache && \
+                           opcache \
+                           imap && \
     curl -L -o /tmp/memcached.tar.gz "https://github.com/php-memcached-dev/php-memcached/archive/master.tar.gz" \
     && mkdir -p /usr/src/php/ext/memcached \
     && tar -C /usr/src/php/ext/memcached -zxvf /tmp/memcached.tar.gz --strip 1 \

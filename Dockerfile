@@ -26,46 +26,62 @@ RUN buildDeps='git libicu-dev libmcrypt-dev libfreetype6-dev libjpeg-dev libjpeg
 		postgresql \
 		postgresql-contrib \
 		$buildDeps \
-		--no-install-recommends && \
-	docker-php-ext-configure gd --with-freetype --with-jpeg && \
-	docker-php-ext-configure bcmath --enable-bcmath && \
-	docker-php-ext-configure pcntl --enable-pcntl && \
-	docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql && \
-	PHP_OPENSSL=yes docker-php-ext-configure imap --with-kerberos --with-imap-ssl; \
-	docker-php-ext-install gd \
-		intl \
+		--no-install-recommends
+
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg && \
+	docker-php-ext-install gd
+
+RUN docker-php-ext-configure bcmath --enable-bcmath && \
+	docker-php-ext-install bcmath
+
+RUN docker-php-ext-configure pcntl --enable-pcntl && \
+	docker-php-ext-install pcntl
+
+RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql && \
+	docker-php-ext-install pgsql pdo_pgsql
+
+RUN PHP_OPENSSL=yes docker-php-ext-configure imap --with-kerberos --with-imap-ssl && \
+	docker-php-ext-install imap
+
+RUN docker-php-ext-install intl \
 		pdo \
 		pdo_mysql \
-		pdo_pgsql \
 		mbstring \
 		zip \
-		bcmath \
-		pcntl \
 		soap \
 		sockets \
 		mysqli \
-		pgsql \
-		opcache \
-		imap && \
-	curl -L -o /tmp/memcached.tar.gz "https://github.com/php-memcached-dev/php-memcached/archive/master.tar.gz" \
+		opcache
+
+RUN curl -L -o /tmp/memcached.tar.gz "https://github.com/php-memcached-dev/php-memcached/archive/master.tar.gz" \
 	&& mkdir -p /usr/src/php/ext/memcached \
 	&& tar -C /usr/src/php/ext/memcached -zxvf /tmp/memcached.tar.gz --strip 1 \
 	&& docker-php-ext-configure memcached \
 	&& docker-php-ext-install memcached \
-	&& rm /tmp/memcached.tar.gz \
-	&& pecl install xdebug \
-	&& docker-php-ext-enable xdebug \
-	# Install PECL extensions
-	# see http://stackoverflow.com/a/8154466/291573) for usage of `printf`
-	pecl install apcu && \
-	pecl install mcrypt && \
-	docker-php-ext-enable mcrypt && \
-	pecl install rar && \
-	docker-php-ext-enable rar && \
-	# clean the mess
-	apt-get clean && \
-	apt-get purge -y --auto-remove $buildDeps && \
-	rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+	&& rm /tmp/memcached.tar.gz
+
+RUN pecl install xdebug \
+	&& docker-php-ext-enable xdebug
+
+RUN pecl install apcu \
+	&& docker-php-ext-enable apcu
+
+RUN pecl install mcrypt \
+	&& docker-php-ext-enable mcrypt
+
+# Build & install the rar module
+RUN curl -L -o /tmp/rar.tar.gz "https://github.com/cataphract/php-rar/archive/master.tar.gz" \
+	&& mkdir -p /usr/src/php/ext/rar \
+	&& tar -C /usr/src/php/ext/rar -zxvf /tmp/rar.tar.gz --strip 1 \
+	&& docker-php-ext-configure rar \
+	&& docker-php-ext-install rar \
+	&& rm /tmp/rar.tar.gz
+
+# clean the mess
+RUN apt-get clean \
+	&& apt-get purge -y --auto-remove $buildDeps \
+	&& rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
 # Configuration
 COPY ./container-files/custom-php.ini /usr/local/etc/php/conf.d/
 
